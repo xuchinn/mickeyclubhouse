@@ -1,7 +1,7 @@
 # uts-grafkom-17
-Mickey Mouse Clubhouse
+### Mickey Mouse Clubhouse
 
-Kelompok 17 Kelas A:
+#### Kelompok 17 Kelas A:
 
 C14200007 - Xuchin Valezka
 
