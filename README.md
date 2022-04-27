@@ -1,12 +1,14 @@
 # uts-grafkom-17
 ### Mickey Mouse Clubhouse
 
-#### Kelompok 17 Kelas A:
+**Kelompok 17 Kelas A:**
+* C14200007 - Xuchin Valezka
+* C14200024 - Jefry Gunawan
+* C14200054 - Kelly Florences Tanjaya
+* C14200061 - Adrian Winaya
 
-C14200007 - Xuchin Valezka
+### Laporan
+**Link untuk [Laporan](https://docs.google.com/document/d/1mNEJ3d9Ykhaav5h8qftXltByPU2-BPtXrSdeg-CAbJ8/edit?usp=sharing)**
 
-C14200024 - Jefry Gunawan
-
-C14200054 - Kelly Florences Tanjaya
-
-C14200061 - Adrian Winaya
+### Video Demo
+**Link untuk [Video Demo]()**
