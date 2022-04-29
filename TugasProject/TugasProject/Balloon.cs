@@ -1,7 +1,4 @@
-﻿using OpenTK.Windowing.Desktop;
-using System;
-using System.Collections.Generic;
-using LearnOpenTK.Common;
+﻿using LearnOpenTK.Common;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.GraphicsLibraryFramework;
@@ -22,10 +19,16 @@ namespace TugasProject
         float maxY = 3f;
         float minY = 0f;
         float curY = -0.1f;
+
+        float maxFly = 3.5f;
+        float minFly = 2.5f;
+        float curFly = 3f;
+
         bool mentok = false; /*true = mentok bawah, false = mentok atas*/
+        bool mentokFly = false;
+
         bool muter = false;
         float degr = -3.1f;
-        float timer = 0;
 
         static class Constants
         {
@@ -253,7 +256,7 @@ namespace TugasProject
         {
             if (curY <= minY || mentok == false)
             {
-                curY += 0.001f;
+                curY += 0.005f;
                 temp *= Matrix4.CreateTranslation(0, curY, 0);
                 mentok = false;
                 if (curY >= maxY)
@@ -270,7 +273,7 @@ namespace TugasProject
                 }
                 else
                 {
-                    curY -= 0.001f;
+                    curY -= 0.005f;
                     temp *= Matrix4.CreateTranslation(0, curY, 0);
                     if (curY <= minY)
                     {
@@ -283,14 +286,43 @@ namespace TugasProject
 
         protected Matrix4 rotateObject(Matrix4 temp)
         {
-            temp *= Matrix4.CreateTranslation(3.6f, 3f, 0);
-            degr += MathHelper.DegreesToRadians(0.05f);
+            temp *= Matrix4.CreateTranslation(3.6f, 0, 0);
+            degr += MathHelper.DegreesToRadians(0.1f);
             temp *= Matrix4.CreateRotationY(degr);
             if (degr >= 3.1f)
             {
                 muter = false;
                 degr = -3.1f;
+                Console.WriteLine("================================");
             }
+            temp = flyObject(temp);
+            return temp;
+        }
+
+        protected Matrix4 flyObject(Matrix4 temp)
+        {
+            curFly = curY;
+            if (curFly <= minFly || mentokFly == false)
+            {
+                Console.WriteLine(curFly + " " + mentokFly);
+                curFly += 0.005f;
+                temp *= Matrix4.CreateTranslation(0, curFly, 0);
+                mentokFly = false;
+                if (curFly >= maxFly)
+                {
+                    mentokFly = true;
+                }
+            }
+            else if (curFly >= maxFly || mentokFly == true)
+            {
+                curFly -= 0.005f;
+                temp *= Matrix4.CreateTranslation(0, curFly, 0);
+                if (curFly <= minFly)
+                {
+                    mentokFly = false;
+                }
+            }
+            curY = curFly;
             return temp;
         }
     }
