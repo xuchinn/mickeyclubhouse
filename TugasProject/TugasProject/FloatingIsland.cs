@@ -20,16 +20,15 @@ namespace TugasProject
         double _time;
         float degr = 0;
         Vector3 _objectPos = new Vector3(0, 0, 0);
-        float _rotationSpeed = 0.1f;
 
         // Animasi naik turun
-        float minHeightFloatingCone = -0.9f;
-        float maxHeightFloatingCone = -0.8f;
+        float minHeightFloatingCone = -0.95f;
+        float maxHeightFloatingCone = -0.75f;
         float heightFloatingCone = -0.85f;
         bool floatingConeDir = false;
 
-        float minHeightFloatingRing = -0.05f;
-        float maxHeightFloatingRing = -0.02f;
+        float minHeightFloatingRing = -0.15f;
+        float maxHeightFloatingRing = 0.1f;
         float heightFloatingRing = -0.05f;
         bool floatingRingDir = false;
 
@@ -38,7 +37,13 @@ namespace TugasProject
         float heightFloatingTorus = 2.1f;
         bool floatingTorusDir = false;
 
-        float rotatePower = 0f;
+        float minHeightFloatingAsteroid = -0.20f;
+        float maxHeightFloatingAsteroid = 0.25f;
+        float heightFloatingAsteroid = -0.05f;
+        bool floatingAsteroidDir = false;
+
+        // Animasi rotasi di tempat
+        float rotationSpeedAsteroid = 2f;
 
         static class Constants
         {
@@ -148,11 +153,11 @@ namespace TugasProject
             // Speed translasi naik turun
             if (floatingConeDir)
             {
-                heightFloatingCone -= 0.0001f;
+                heightFloatingCone -= 0.001f;
             }
             else
             {
-                heightFloatingCone += 0.0001f;
+                heightFloatingCone += 0.001f;
             }
             temp = Matrix4.Identity * Matrix4.CreateTranslation(0f, heightFloatingCone, 0f);
             foreach (Asset3d i in objectList2)
@@ -161,28 +166,40 @@ namespace TugasProject
             }
 
             // Floating Asteroid
-            // Untuk animasi rotasi di tempat
-            if (rotatePower > 360f)
+            if (heightFloatingAsteroid > maxHeightFloatingAsteroid)
             {
-                rotatePower = 0f;
+                // Arah akan kebawah
+                floatingAsteroidDir = true;
             }
-            rotatePower += 0.005f;
-
-            temp = Matrix4.Identity * Matrix4.CreateTranslation(-1.1f, -0.15f, 0f);
-            degr += MathHelper.DegreesToRadians(0.1f);
+            else if (heightFloatingAsteroid < minHeightFloatingAsteroid)
+            {
+                // Arah akan keatas
+                floatingAsteroidDir = false;
+            }
+            // Speed translasi naik turun
+            if (floatingAsteroidDir)
+            {
+                heightFloatingAsteroid -= 0.0025f;
+            }
+            else
+            {
+                heightFloatingAsteroid += 0.0025f;
+            }
+            temp = Matrix4.Identity * Matrix4.CreateTranslation(-1.1f, heightFloatingAsteroid, 0f);
+            degr += MathHelper.DegreesToRadians(0.3f);
             temp = temp * Matrix4.CreateRotationY(degr);
             foreach (Asset3d i in objectList3)
             {
-                i.Rotate((0, 0, 0), (0, 1, 0), rotatePower);
+                i.Rotate((0, 0, 0), (0, 1, 0), rotationSpeedAsteroid);
                 i.render(temp, scaling, _camera.GetViewMatrix(), _camera.GetProjectionMatrix());
             }
 
-            temp = Matrix4.Identity * Matrix4.CreateTranslation(1.1f, -0.15f, 0f);
-            degr += MathHelper.DegreesToRadians(0.1f);
+            temp = Matrix4.Identity * Matrix4.CreateTranslation(1.1f, heightFloatingAsteroid, 0f);
+            degr += MathHelper.DegreesToRadians(0.3f);
             temp = temp * Matrix4.CreateRotationY(degr);
             foreach (Asset3d i in objectList4)
             {
-                i.Rotate((0, 0, 0), (0, 1, 0), rotatePower);
+                i.Rotate((0, 0, 0), (0, 1, 0), rotationSpeedAsteroid);
                 i.render(temp, scaling, _camera.GetViewMatrix(), _camera.GetProjectionMatrix());
             }
 
@@ -197,11 +214,11 @@ namespace TugasProject
             }
             if (floatingRingDir)
             {
-                heightFloatingRing -= 0.00005f;
+                heightFloatingRing -= 0.0005f;
             }
             else
             {
-                heightFloatingRing += 0.00005f;
+                heightFloatingRing += 0.0005f;
             }
             temp = Matrix4.Identity * Matrix4.CreateTranslation(0f, heightFloatingRing, 0f);
             foreach (Asset3d i in objectList5)
@@ -234,11 +251,11 @@ namespace TugasProject
             }
             if (floatingTorusDir)
             {
-                heightFloatingTorus -= 0.0001f;
+                heightFloatingTorus -= 0.001f;
             }
             else
             {
-                heightFloatingTorus += 0.0001f;
+                heightFloatingTorus += 0.001f;
             }
             temp = Matrix4.Identity * Matrix4.CreateTranslation(0f,heightFloatingTorus, 0f);
             foreach (Asset3d i in objectList7)
