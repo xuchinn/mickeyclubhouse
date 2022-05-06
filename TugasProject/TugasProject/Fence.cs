@@ -11,8 +11,9 @@ namespace TugasProject
     {
         List<Asset3d> objectList = new List<Asset3d>();
 
-        float height = 17f;
-        float rotationPower = 0f;
+        float height = 17.9f;
+        float rotationSpeed = 2f;
+        float countRotation = 0f;
 
         static class Constants
         {
@@ -36,21 +37,21 @@ namespace TugasProject
             float x, float y, float z)
         {
             Matrix4 temp = Matrix4.Identity;
+            // Animasi jatuh dari atas
             if (height > y)
             {
                 height -= 0.05f;
             }
             temp = temp * Matrix4.CreateTranslation(x, height, z);
 
-            // Untuk animasi rotation
-            //if (rotationPower < 360f)
-            //{
-            //    rotationPower += 0.005f;
-            //}
+            countRotation += rotationSpeed;
 
             foreach (Asset3d i in objectList)
             {
-                //i.Rotate((0, 0, 0), (0, 0, 1), rotationPower);
+                if (countRotation < 720f)
+                {
+                    i.Rotate((0, 0, 0), (0, 0, 1), rotationSpeed);
+                }
                 i.render(temp, scaling, _camera.GetViewMatrix(), _camera.GetProjectionMatrix());
             }
             
