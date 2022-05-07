@@ -17,13 +17,17 @@ namespace TugasProject
         List<Asset3d> objectList6 = new List<Asset3d>();
         List<Asset3d> objectList7 = new List<Asset3d>();
 
-        double _time;
+        float time;
         float degr = 0;
         Vector3 _objectPos = new Vector3(0, 0, 0);
-        float _rotationSpeed = 0.1f;
+        float rotationSpeed = 0.1f;
 
         // Animasi naik turun
         float height = -1.5f;
+        bool heightPos = true;
+        bool topHeight = false;
+        bool animateBool = true;
+        float speed = 0.003f;
 
         static class Constants
         {
@@ -98,9 +102,57 @@ namespace TugasProject
         {
             Matrix4 temp = Matrix4.Identity;
 
-            if (height <= y)
+            if (animateBool)
             {
-                height += 0.003f;
+                if (heightPos)
+                {
+                    // Juggle Effect
+                    if (!topHeight)
+                    {
+                        if (height < y + 0.05f)
+                        {
+                            height += speed;
+                        }
+                        else
+                        {
+                            topHeight = true;
+                        }
+                    }
+                    else
+                    {
+                        if (height > y)
+                        {
+                            height -= speed;
+                        }
+                        else
+                        {
+                            heightPos = false;
+                            animateBool = false;
+                        }
+                    }
+                }
+                else
+                {
+                    if (height > -0.5f)
+                    {
+                        height -= speed;
+                    }
+                    else
+                    {
+                        heightPos = true;
+                        topHeight = false;
+                        animateBool = false;
+                    }
+                }
+            }
+            else
+            {
+                time += 0.016667f;
+                if (time > 8f)
+                {
+                    time = 0f;
+                    animateBool = true;
+                }
             }
 
             // Batang
