@@ -11,4 +11,4 @@
 Link untuk **[Laporan](https://docs.google.com/document/d/1mNEJ3d9Ykhaav5h8qftXltByPU2-BPtXrSdeg-CAbJ8/edit?usp=sharing)**
 
 ### Video Demo
-Link untuk **[Video Demo]()**
+Link untuk **[Video Demo](https://youtu.be/h5Lzy8FkJ18)**
