@@ -15,7 +15,7 @@ namespace TugasProject
     {
         Camera _camera;
         Vector3 _objectPos = new Vector3(0, 0, 0);
-        float _rotationSpeed = 0.1f;
+        float _rotationSpeed = 1.0f;
 
         FloatingIsland floatingIsland = new FloatingIsland();
         Tree tree = new Tree();
@@ -46,6 +46,8 @@ namespace TugasProject
             Console.WriteLine("Tekan Down Arrow untuk memutar ke bawah");
             Console.WriteLine("Tekan Left Arrow untuk memutar ke kiri");
             Console.WriteLine("Tekan Right Arrow untuk memutar ke kanan");
+            Console.WriteLine("Tekan PageUp Arrow untuk naik ke atas");
+            Console.WriteLine("Tekan PageDown Arrow untuk turun ke bawah");
 
             base.OnLoad();
             ////Biar ga kedobelan
@@ -91,29 +93,28 @@ namespace TugasProject
 
             // Kelly
             clubhouse.renderObjects(_camera, 1.0f, args, 0.0f, -0.1f, 0.0f);
-
             rocks.renderObjects(_camera, 0.8f, args, 0.4f, 0.0f, 0.05f);
 
             // Xuchin
             mickey.renderObjects(args, _camera, 0.15f, 2.7f, 2f, 8f);
-            //mouseketool.renderObjects(args, _camera, 1f, 0f, 3.2f, 0f);
+
             if (up == true)
             {
-                max += 0.001f;
-                if (max >= 0.1f)
+                max += 0.005f;
+                if (max >= 0.2f)
                 {
                     up = false;
                 }
             }
             else
             {
-                max -= 0.001f;
+                max -= 0.005f;
                 if (max <= 0f)
                 {
                     up = true;
                 }
             }
-            mouseketool.renderObjects(args, _camera, 1f, 0.0f, 3.2f + max, 0.0f);
+            mouseketool.renderObjects(args, _camera, 0.7f, 0.0f, 5.0f + max, 0.0f);
 
             // Adrian
             balloon.renderObjects(args, _camera, 0.5f, -0.8f, 1.7f, 0);
@@ -155,7 +156,7 @@ namespace TugasProject
                 Close();
             }
 
-            float cameraSpeed = 10f;
+            float cameraSpeed = 8f;
             if (KeyboardState.IsKeyDown(Keys.W))
             {
                 _camera.Position += _camera.Front * cameraSpeed * (float)args.Time;
@@ -220,6 +221,15 @@ namespace TugasProject
                     generateArbRotationMatrix(axis, _objectPos, -_rotationSpeed).ExtractRotation());
                 _camera.Position += _objectPos;
                 _camera._front = -Vector3.Normalize(_camera.Position - _objectPos);
+            }
+
+            if (input.IsKeyDown(Keys.PageUp))
+            {
+                _camera.Position += _camera.Up * cameraSpeed * (float)args.Time;
+            }
+            if (input.IsKeyDown(Keys.PageDown))
+            {
+                _camera.Position -= _camera.Up * cameraSpeed * (float)args.Time;
             }
         }
 
